@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VEXOR — Sites & Automações feitos para elevar.</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#00e676;--bk:#000000;--bk2:#0a0a0a;--w:#f5f5f7;--muted:#6e6e73;--muted2:#3d3d3f;--border:rgba(255,255,255,0.08)}
+html{scroll-behavior:smooth}
+body{background:var(--bk);color:var(--w);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── ICON ── */
+.vi{stroke:#00e676;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.vi-tri{stroke-dasharray:66;stroke-dashoffset:66}
+.vi-wl{stroke-dasharray:200;stroke-dashoffset:200}
+.vi-wr{stroke-dasharray:200;stroke-dashoffset:200}
+.vi-il{stroke-dasharray:55;stroke-dashoffset:55}
+.vi-ir{stroke-dasharray:55;stroke-dashoffset:55}
+.vi-st{stroke-dasharray:35;stroke-dashoffset:35}
+.go .vi-tri{animation:draw .35s cubic-bezier(.4,0,.2,1) 0s forwards}
+.go .vi-wl {animation:draw .5s  cubic-bezier(.4,0,.2,1) .3s forwards}
+.go .vi-wr {animation:draw .5s  cubic-bezier(.4,0,.2,1) .5s forwards}
+.go .vi-il {animation:draw .28s cubic-bezier(.4,0,.2,1) .85s forwards}
+.go .vi-ir {animation:draw .28s cubic-bezier(.4,0,.2,1) 1.0s forwards}
+.go .vi-st {animation:draw .2s  cubic-bezier(.4,0,.2,1) 1.15s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;transition:background .3s,backdrop-filter .3s}
+nav.s{background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo svg{width:16px;height:19px}
+.nav-logo span{font-size:14px;font-weight:700;letter-spacing:2px;color:var(--w)}
+.nav-mid{display:flex;gap:28px;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-mid a{font-size:13px;color:rgba(245,245,247,.6);text-decoration:none;transition:color .2s}
+.nav-mid a:hover{color:var(--w)}
+.nav-cta{font-size:13px;color:var(--g);text-decoration:none;font-weight:500;transition:opacity .2s}
+.nav-cta:hover{opacity:.7}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(0,230,118,.06) 0%,transparent 60%);pointer-events:none}
+
+.hero-icon{margin-bottom:32px;opacity:0;animation:fadeup .6s ease .1s forwards}
+.hero-icon svg{width:56px;height:66px;filter:drop-shadow(0 0 16px rgba(0,230,118,.3))}
+
+.hero-tag{font-size:13px;color:var(--g);font-weight:500;margin-bottom:20px;opacity:0;animation:fadeup .5s ease .2s forwards}
+
+h1{font-size:clamp(48px,7vw,96px);font-weight:700;line-height:1.05;letter-spacing:-.5px;margin-bottom:24px;opacity:0;animation:fadeup .6s ease .35s forwards}
+h1 .dim{color:var(--muted)}
+h1 .green{color:var(--g)}
+
+.hero-sub{font-size:clamp(16px,1.8vw,21px);color:var(--muted);line-height:1.65;max-width:600px;margin:0 auto 44px;font-weight:300;opacity:0;animation:fadeup .6s ease .5s forwards}
+
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeup .6s ease .65s forwards}
+.btn-g{padding:14px 28px;background:var(--g);color:#000;font-size:15px;font-weight:600;text-decoration:none;border-radius:980px;transition:all .2s}
+.btn-g:hover{background:#1aff88;transform:scale(1.02)}
+.btn-w{padding:14px 28px;background:rgba(255,255,255,.08);color:var(--w);font-size:15px;font-weight:500;text-decoration:none;border-radius:980px;backdrop-filter:blur(10px);transition:all .2s}
+.btn-w:hover{background:rgba(255,255,255,.14)}
+
+.hero-scroll{position:absolute;bottom:32px;font-size:11px;color:var(--muted2);letter-spacing:2px;opacity:0;animation:fadeup .5s ease 1.2s forwards}
+
+/* ── FEATURES ROW (Apple-style benefit pills) ── */
+.features{padding:0 24px 80px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.feat-dot{width:5px;height:5px;border-radius:50%;background:var(--g);flex-shrink:0}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:0 24px}
+
+/* ── BIG STATEMENT (Apple style — full width, centered, huge text) ── */
+.statement{padding:140px 24px;text-align:center;position:relative;overflow:hidden}
+.statement-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,230,118,.05),transparent 65%);pointer-events:none}
+.statement-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px}
+.statement-text{font-size:clamp(36px,5.5vw,72px);font-weight:700;line-height:1.08;letter-spacing:-.5px;max-width:900px;margin:0 auto 28px}
+.statement-text em{color:var(--g);font-style:normal}
+.statement-sub{font-size:17px;color:var(--muted);max-width:540px;margin:0 auto;line-height:1.7;font-weight:300}
+
+/* ── SERVICES (Apple product grid style) ── */
+.services{padding:0 24px 140px}
+.services-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:16px}
+.services-title{font-size:clamp(32px,4.5vw,56px);font-weight:700;text-align:center;letter-spacing:-.3px;margin-bottom:80px;line-height:1.1}
+.services-title em{color:var(--g);font-style:normal}
+
+.svc-rows{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:1000px;margin:0 auto}
+.svc-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.svc{background:var(--bk);padding:52px 52px;transition:background .25s}
+.svc:hover{background:#080808}
+.svc-num{font-size:11px;color:var(--g);letter-spacing:3px;margin-bottom:20px;opacity:.5}
+.svc-t{font-size:22px;font-weight:700;letter-spacing:-.3px;margin-bottom:12px}
+.svc-d{font-size:14px;color:var(--muted);line-height:1.75}
+.svc-full{grid-column:span 2;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;padding:40px 52px}
+.svc-full-text{font-size:16px;color:var(--muted);line-height:1.7}
+.svc-full-text strong{color:var(--w);font-weight:500}
+
+/* ── WHY (Apple alternating sections) ── */
+.why{padding:0 24px 140px}
+.why-header{text-align:center;margin-bottom:80px}
+.why-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.why-title{font-size:clamp(32px,4.5vw,56px);font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.why-title em{color:var(--g);font-style:normal}
+
+.why-items{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:1000px;margin:0 auto}
+.why-item{background:var(--bk);padding:48px 52px;display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:center;transition:background .2s}
+.why-item:hover{background:#080808}
+.why-item-left{}
+.why-num{font-size:11px;color:var(--g);letter-spacing:3px;margin-bottom:14px;opacity:.5}
+.why-item-title{font-size:22px;font-weight:700;letter-spacing:-.3px;line-height:1.2}
+.why-item-title.accent{color:var(--g)}
+.why-item-desc{font-size:15px;color:var(--muted);line-height:1.75;font-weight:300}
+
+/* ── FOUNDER (Apple hero-style profile) ── */
+.founder{padding:0 24px 140px;text-align:center}
+.founder-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.founder-title{font-size:clamp(32px,4.5vw,56px);font-weight:700;letter-spacing:-.3px;max-width:700px;margin:0 auto 60px;line-height:1.1}
+.founder-title em{color:var(--g);font-style:normal}
+
+.founder-card{max-width:440px;margin:0 auto 60px;background:linear-gradient(160deg,#0d1f14,#050505);border:1px solid rgba(0,230,118,.1);border-radius:24px;padding:60px 40px;position:relative;overflow:hidden}
+.founder-card-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:280px;height:200px;background:radial-gradient(ellipse,rgba(0,230,118,.08),transparent 65%);pointer-events:none}
+.founder-card-icon{position:relative;z-index:1;margin-bottom:32px}
+.founder-card-icon svg{width:80px;height:94px}
+.founder-card-name{font-size:20px;font-weight:700;margin-bottom:4px;position:relative;z-index:1}
+.founder-card-role{font-size:13px;color:var(--g);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+
+.founder-bio{max-width:640px;margin:0 auto 48px}
+.founder-bio p{font-size:17px;color:var(--muted);line-height:1.75;font-weight:300}
+.founder-bio p+p{margin-top:16px}
+.founder-bio strong{color:var(--w);font-weight:500}
+
+.fstats{display:flex;justify-content:center;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:540px;margin:0 auto 32px}
+.fstat{flex:1;padding:24px 20px;background:var(--bk);text-align:center}
+.fstat-n{font-size:30px;font-weight:700;color:var(--g);letter-spacing:-1px;margin-bottom:4px}
+.fstat-l{font-size:12px;color:var(--muted);line-height:1.4}
+.founder-socials{display:flex;gap:10px;justify-content:center}
+.social{padding:10px 22px;border:1px solid var(--border);border-radius:980px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .2s}
+.social:hover{border-color:rgba(255,255,255,.2);color:var(--w)}
+
+/* ── PROCESS ── */
+.process{padding:0 24px 140px}
+.process-header{text-align:center;margin-bottom:80px}
+.process-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.process-title{font-size:clamp(32px,4.5vw,56px);font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.process-title em{color:var(--g);font-style:normal}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:1000px;margin:0 auto}
+.proc{background:var(--bk);padding:48px 36px;transition:background .2s}
+.proc:hover{background:#080808}
+.proc-n{font-size:11px;color:var(--g);letter-spacing:3px;margin-bottom:24px;opacity:.5}
+.proc-t{font-size:19px;font-weight:700;letter-spacing:-.3px;margin-bottom:12px}
+.proc-d{font-size:13px;color:var(--muted);line-height:1.75}
+
+/* ── PROJECTS ── */
+.projects{padding:0 24px 140px}
+.projects-header{text-align:center;margin-bottom:80px}
+.projects-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.projects-title{font-size:clamp(32px,4.5vw,56px);font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.projects-sub{font-size:17px;color:var(--muted);margin-top:14px;font-weight:300}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1000px;margin:0 auto}
+.proj{background:var(--bk2);border:1px solid var(--border);border-radius:20px;padding:36px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .25s,transform .25s}
+.proj:hover{border-color:rgba(0,230,118,.15);transform:translateY(-4px)}
+.proj-chrome{display:flex;gap:6px}
+.proj-dot{width:9px;height:9px;border-radius:50%;background:var(--muted2)}
+.proj-tag{font-size:11px;color:var(--g);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.proj-name{font-size:21px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── CTA ── */
+.cta{padding:0 24px 120px;text-align:center}
+.cta-inner{max-width:800px;margin:0 auto;padding:100px 40px;border:1px solid var(--border);border-radius:28px;background:var(--bk2);position:relative;overflow:hidden}
+.cta-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(0,230,118,.06),transparent 65%);pointer-events:none}
+.cta-label{font-size:12px;color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;position:relative}
+.cta-title{font-size:clamp(36px,5.5vw,68px);font-weight:700;letter-spacing:-.5px;line-height:1.05;margin-bottom:18px;position:relative}
+.cta-title em{color:var(--g);font-style:normal}
+.cta-sub{font-size:17px;color:var(--muted);margin-bottom:44px;line-height:1.65;font-weight:300;position:relative}
+.cta-note{font-size:12px;color:var(--muted2);margin-top:18px;position:relative}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+.ft-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.ft-logo svg{width:14px;height:16px}
+.ft-logo span{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--muted)}
+.ft-copy,.ft-tag{font-size:12px;color:var(--muted2)}
+
+/* ── REVEAL ── */
+.r{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
+.r.on{opacity:1;transform:none}
+.r.d1{transition-delay:.1s}.r.d2{transition-delay:.2s}.r.d3{transition-delay:.3s}
+
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:800px){
+  .nav-mid{display:none}
+  .svc-row{grid-template-columns:1fr}
+  .svc-full{grid-template-columns:1fr;gap:20px}
+  .why-item{grid-template-columns:1fr;gap:16px}
+  .proc-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:8px;text-align:center;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg class="go" viewBox="0 0 40 48" fill="none">
+      <polygon class="vi vi-tri" points="20,2 26,12 14,12"/>
+      <polyline class="vi vi-wl"  points="14,15 4,15 3,19 16,46 20,36 20,26 14,18"/>
+      <polyline class="vi vi-wr"  points="26,15 36,15 37,19 24,46 20,36 20,26 26,18"/>
+      <line     class="vi vi-il"  x1="14" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-ir"  x1="26" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-st"  x1="20" y1="26" x2="20" y2="36"/>
+    </svg>
+    <span>VEXOR</span>
+  </a>
+  <ul class="nav-mid">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#porque">Por que Vexor</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#processo">Processo</a></li>
+  </ul>
+  <a href="https://www.instagram.com/use.vexor/" target="_blank" class="nav-cta">Iniciar Projeto</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-icon">
+    <svg class="go" viewBox="0 0 40 48" fill="none">
+      <polygon class="vi vi-tri" points="20,2 26,12 14,12"/>
+      <polyline class="vi vi-wl"  points="14,15 4,15 3,19 16,46 20,36 20,26 14,18"/>
+      <polyline class="vi vi-wr"  points="26,15 36,15 37,19 24,46 20,36 20,26 26,18"/>
+      <line     class="vi vi-il"  x1="14" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-ir"  x1="26" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-st"  x1="20" y1="26" x2="20" y2="36"/>
+    </svg>
+  </div>
+  <div class="hero-tag">Built to Elevate.</div>
+  <h1>Sites & Automações<br><span class="dim">feitos para</span> <span class="green">elevar.</span></h1>
+  <p class="hero-sub">Criamos sites de alta conversão e automações inteligentes para negócios crescerem mais rápido — e parecerem à altura do que entregam.</p>
+  <div class="hero-btns">
+    <a href="https://www.instagram.com/use.vexor/" target="_blank" class="btn-g">Iniciar Projeto ↗</a>
+<a href="https://www.instagram.com/use.vexor/" target="_blank" class="btn-w">📩 Falar no Instagram</a>
+  </div>
+  <div class="hero-scroll">↓ scroll</div>
+</section>
+
+<!-- FEATURES ROW -->
+<div class="features r">
+  <div class="feat"><span class="feat-dot"></span>Sites de alta conversão</div>
+  <div class="feat"><span class="feat-dot"></span>Landing pages estratégicas</div>
+  <div class="feat"><span class="feat-dot"></span>Automações inteligentes</div>
+  <div class="feat"><span class="feat-dot"></span>Integrações WhatsApp</div>
+  <div class="feat"><span class="feat-dot"></span>Soluções com IA</div>
+  <div class="feat"><span class="feat-dot"></span>Recife, PE</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-glow"></div>
+  <p class="statement-label r">Por que Vexor</p>
+  <h2 class="statement-text r d1">A maioria das agências entrega sites.<br>Nós entregamos <em>resultado.</em></h2>
+  <p class="statement-sub r d2">Não construímos páginas para impressionar portfólio. Construímos para converter visitante em cliente, todo dia, sem parar.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="services" id="servicos" style="padding-top:140px">
+  <p class="services-label r">Serviços</p>
+  <h2 class="services-title r d1">Tudo que seu negócio precisa<br>para parecer — e operar —<br>como <em>líder de mercado.</em></h2>
+  <div class="svc-rows r d2">
+    <div class="svc-row">
+      <div class="svc">
+        <div class="svc-num">01</div>
+        <div class="svc-t">Landing Pages</div>
+        <p class="svc-d">Páginas de alta conversão com copy estratégico e design que guia o olhar. Seu visitante entra, seu cliente sai.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-num">02</div>
+        <div class="svc-t">Sites Profissionais</div>
+        <p class="svc-d">Sites institucionais que posicionam você como referência antes mesmo de o cliente falar contigo.</p>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc">
+        <div class="svc-num">03</div>
+        <div class="svc-t">Automações</div>
+        <p class="svc-d">Fluxos que captam, qualificam e convertem leads enquanto você dorme. Sem você mover um dedo.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-num">04</div>
+        <div class="svc-t">WhatsApp & IA</div>
+        <p class="svc-d">O cliente já está no WhatsApp. Automações inteligentes que qualificam e convertem no canal que ele usa todo dia.</p>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc svc-full">
+        <p class="svc-full-text">Não sabe por onde começar? <strong>Me conta o negócio e eu te digo exatamente o que faz sentido</strong> — sem enrolação e sem compromisso.</p>
+        <a href="#contato" class="btn-g" style="white-space:nowrap;flex-shrink:0">Vamos conversar →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY -->
+<section class="why" id="porque" style="padding-top:140px">
+  <div class="why-header">
+    <p class="why-label r">Diferenciais</p>
+    <h2 class="why-title r d1">Feito para converter,<br>não para <em>impressionar.</em></h2>
+  </div>
+  <div class="why-items r d2">
+    <div class="why-item">
+      <div class="why-item-left">
+        <div class="why-num">01</div>
+        <div class="why-item-title">Você fala direto com quem executa</div>
+      </div>
+<p class="why-item-desc">A Vexor opera com automações e agentes inteligentes para responder mais rápido, produzir melhor e escalar sem perder qualidade. Você não fala com uma cadeia de atendentes — fala direto com quem lidera a execução.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-item-left">
+        <div class="why-num">02</div>
+        <div class="why-item-title accent">Rápido onde importa</div>
+      </div>
+      <p class="why-item-desc">Site que demora 5 segundos perde metade dos visitantes. Cada projeto sai abaixo de 1 segundo de carregamento — por padrão, não como extra.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-item-left">
+        <div class="why-num">03</div>
+        <div class="why-item-title">Prazo real é prazo cumprido</div>
+      </div>
+      <p class="why-item-desc">Data combinada não é estimativa — é compromisso. Você pode planejar seu lançamento com antecedência porque eu entrego quando prometo.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-item-left">
+        <div class="why-num">04</div>
+        <div class="why-item-title">Especialista em Recife</div>
+      </div>
+      <p class="why-item-desc">Sei o que funciona para clínicas, salões e escritórios aqui. Não é suposição — é foco cirúrgico no seu mercado e no seu cliente.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOUNDER -->
+<section class="founder" id="sobre" style="padding-top:140px">
+  <p class="founder-label r">Sobre o Fundador</p>
+  <h2 class="founder-title r d1">Fundei a Vexor para elevar o padrão dos <em>negócios.</em></h2>
+  <div class="founder-card r d2">
+    <div class="founder-card-glow"></div>
+    <div class="founder-card-icon">
+      <svg id="fc-svg" viewBox="0 0 40 48" fill="none">
+        <polygon class="vi vi-tri" points="20,2 26,12 14,12"/>
+        <polyline class="vi vi-wl"  points="14,15 4,15 3,19 16,46 20,36 20,26 14,18"/>
+        <polyline class="vi vi-wr"  points="26,15 36,15 37,19 24,46 20,36 20,26 26,18"/>
+        <line     class="vi vi-il"  x1="14" y1="18" x2="20" y2="26"/>
+        <line     class="vi vi-ir"  x1="26" y1="18" x2="20" y2="26"/>
+        <line     class="vi vi-st"  x1="20" y1="26" x2="20" y2="36"/>
+      </svg>
+    </div>
+    <div class="founder-card-name">Eduardo Mariz</div>
+    <div class="founder-card-role">Founder · Vexor</div>
+  </div>
+  <div class="founder-bio r d3">
+    <p> Comecei a estudar programação cedo, movido por uma obsessão genuína: <strong>transformar negócios comuns em marcas que parecem — e operam — como referências do seu mercado.</strong></p>
+    <p>A Vexor nasceu de uma frustração real. Negócios incríveis perdem clientes todos os dias por causa de sites lentos, processos manuais e uma presença digital que não faz jus ao que entregam.</p>
+    <p>Aqui, cada projeto passa pelas minhas mãos. <strong>Sem terceirização. Sem template. Sem enrolação.</strong> Só estratégia, design cuidado e tecnologia bem feita.</p>
+  </div>
+  <div class="fstats r">
+    <div class="fstat"><div class="fstat-n">100%</div><div class="fstat-l">Hands-on em cada projeto</div></div>
+    <div class="fstat"><div class="fstat-n">1:1</div><div class="fstat-l"></div></div>
+    <div class="fstat"><div class="fstat-n">∞</div><div class="fstat-l">Comprometimento</div></div>
+  </div>
+ <div class="founder-socials r" style="margin-top:24px">
+  <a href="https://www.linkedin.com/in/eduardo-mariz-alves-2b805b3b5" target="_blank" class="social">🔗 LinkedIn</a>
+  <a href="https://github.com/Eduhmarizz" target="_blank" class="social">🐙 GitHub</a>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="projects" id="projetos" style="padding-top:140px">
+  <div class="projects-header">
+    <p class="projects-label r">Projetos</p>
+    <h2 class="projects-title r d1">Conceitos para negócios reais.</h2>
+    <p class="projects-sub r d2">Uma amostra dos formatos e segmentos com os quais trabalhamos.</p>
+  </div>
+  <div class="proj-grid r">
+    <div class="proj">
+      <div class="proj-chrome"><div class="proj-dot"></div><div class="proj-dot"></div><div class="proj-dot"></div></div>
+      <div>
+        <div class="proj-tag">Clínica · Landing Page</div>
+        <div class="proj-name">Clínica Estética Premium</div>
+        <p class="proj-desc">Landing page com agendamento online, copy estratégico e foco em captar novos pacientes 24h por dia.</p>
+      </div>
+    </div>
+    <div class="proj">
+      <div class="proj-chrome"><div class="proj-dot"></div><div class="proj-dot"></div><div class="proj-dot"></div></div>
+      <div>
+        <div class="proj-tag">Advocacia · Site Profissional</div>
+        <div class="proj-name">Escritório de Advocacia</div>
+        <p class="proj-desc">Site institucional com foco em autoridade, credibilidade e captação de leads qualificados para consultas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<section class="process" id="processo" style="padding-top:140px">
+  <div class="process-header">
+    <p class="process-label r">Processo</p>
+    <h2 class="process-title r d1">Do briefing ao lançamento<br>em <em>semanas.</em></h2>
+  </div>
+  <div class="proc-grid r d2">
+    <div class="proc"><div class="proc-n">01</div><div class="proc-t">Descoberta</div><p class="proc-d">Mergulhamos no negócio, entendemos os clientes e definimos a estratégia certa.</p></div>
+    <div class="proc"><div class="proc-n">02</div><div class="proc-t">Design</div><p class="proc-d">UX estratégico e UI premium. Cada tela desenhada para converter.</p></div>
+    <div class="proc"><div class="proc-n">03</div><div class="proc-t">Construção</div><p class="proc-d">Stack moderna, rápido, responsivo e pronto para crescer junto com o negócio.</p></div>
+    <div class="proc"><div class="proc-n">04</div><div class="proc-t">Lançamento</div><p class="proc-d">Deploy, configurações finais e suporte pós-lançamento garantido.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contato" style="padding-top:140px">
+  <div class="cta-inner r">
+    <div class="cta-glow"></div>
+    <p class="cta-label">Próximo Passo</p>
+    <h2 class="cta-title">Vamos construir algo<br><em>que vale a visita.</em></h2>
+    <p class="cta-sub">Conte sobre o seu negócio. Respondemos em até um dia útil com um plano claro, honesto e sem compromisso.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:contato@vexor.digital" class="btn-g">Iniciar Projeto ↗</a>
+      <a href="#" class="btn-w">💬 Falar no WhatsApp</a>
+    </div>
+    <p class="cta-note">Sem compromisso · Sem enrolação · Resposta em até 24h</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="ft-logo">
+    <svg class="go" viewBox="0 0 40 48" fill="none">
+      <polygon class="vi vi-tri" points="20,2 26,12 14,12"/>
+      <polyline class="vi vi-wl"  points="14,15 4,15 3,19 16,46 20,36 20,26 14,18"/>
+      <polyline class="vi vi-wr"  points="26,15 36,15 37,19 24,46 20,36 20,26 26,18"/>
+      <line     class="vi vi-il"  x1="14" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-ir"  x1="26" y1="18" x2="20" y2="26"/>
+      <line     class="vi vi-st"  x1="20" y1="26" x2="20" y2="36"/>
+    </svg>
+    <span>VEXOR</span>
+  </a>
+  <span class="ft-copy">© 2025 Vexor. Todos os direitos reservados.</span>
+  <span class="ft-tag">Built to Elevate ↑</span>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s',scrollY>40));
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.r').forEach(r=>io.observe(r));
+
+// Founder icon animates when visible
+const fcSvg=document.getElementById('fc-svg');
+const fcObs=new IntersectionObserver(e=>{if(e[0].isIntersecting){fcSvg.classList.add('go');fcObs.disconnect()}},{threshold:.5});
+fcObs.observe(fcSvg);
+</script>
+</body>
+</html>
